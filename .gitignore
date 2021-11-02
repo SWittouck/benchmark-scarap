@@ -1,0 +1,6 @@
+.Rproj.user/*
+data/*
+results/*
+src/benchmarkscripts_in_progress/*
+src/experiments/*
+src/old/*

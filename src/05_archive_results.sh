@@ -1,9 +1,14 @@
 #!/usr/bin/env bash 
 
-cd ../results
-tar czf benchmark_scarap_v1.tar.gz \
+cd ../results/benchmarks
+tar czf benchmark_scarap_v2-beta.tar.gz \
   README.md \
+  orthobench/pangenomes.csv \
+  orthobench/resources.csv \
+  orthobench/benchmarks.csv \
+  parabench/pangenomes.csv \
+  parabench/resources.csv \
+  parabench/benchmarks.csv \
   lactobacillales/pangenomes.csv \
-  lactobacillales/times.csv \
-  qfo2018_bacteria/pangenomes.csv \
-  qfo2018_bacteria/times.csv
+  lactobacillales/resources.csv
+mv benchmark_scarap_v2-beta.tar.gz ../

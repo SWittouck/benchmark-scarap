@@ -7,10 +7,10 @@ library(tidyverse)
 
 source("functions.R")
 
-din_orthobench <- "../../results/benchmarks/orthobench/benchmarks"
-din_parabench <- "../../results/benchmarks/parabench/benchmarks"
-fout_orthobench <- "../../results/benchmarks/orthobench/benchmarks.csv"
-fout_parabench <- "../../results/benchmarks/parabench/benchmarks.csv"
+din_orthobench <- "../../results/scarap_pan/orthobench/benchmarks"
+din_parabench <- "../../results/scarap_pan/parabench/benchmarks"
+fout_orthobench <- "../../results/scarap_pan/orthobench/benchmarks.csv"
+fout_parabench <- "../../results/scarap_pan/parabench/benchmarks.csv"
 
 tools_orthobench <- read_orthobench_files(din_orthobench)
 tools_parabench <- read_parabench_files(din_parabench)

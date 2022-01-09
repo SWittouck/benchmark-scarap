@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# The goal of this script is to run a set of pangenome tools on a set of 
-# different test databases containing genomes (faa files). 
+# This script runs a set of pangenome tools on a set of test databases 
+# containing genomes (faa files). 
 
 # dependencies: SCARAP fe2ae66
 
-din_orthobench=../../data/OrthoBench_v1.1/Input # *.fa.gz
-din_parabench=../../data/paraBench/data/proteomes # *.fasta.gz
-din_lactos=../../results/dataprep/lactobacillales/genes/faas # *.faa.gz
-dout_root=../../results/benchmarks
+din_orthobench=../../data/orthobench/OrthoBench_v1.1/Input # *.fa.gz
+din_parabench=../../data/parabench/paraBench/data/proteomes # *.fasta.gz
+din_lactos=../../results/lactobacillales_genera/genes/faas # *.faa.gz
+dout_root=../../results/scarap_pan
 
 threads=16
 

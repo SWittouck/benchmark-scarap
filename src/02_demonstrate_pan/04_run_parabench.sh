@@ -3,10 +3,10 @@
 # This script will run the ParaBench pangenome evaluation script on the 
 # orthobench-formatted output of a number of pangenome tools. 
 
-din_pangenomes=../../results/benchmarks/parabench/orthobench_formatted
-dout=../../results/benchmarks/parabench/benchmarks
+din_pangenomes=../../results/scarap_pan/parabench/orthobench_formatted
+dout=../../results/scarap_pan/parabench/benchmarks
 
-din_parabench_script=../../data/paraBench
+din_parabench_script=../../data/parabench/paraBench
 
 # create output folder
 [ -d $dout ] || mkdir $dout

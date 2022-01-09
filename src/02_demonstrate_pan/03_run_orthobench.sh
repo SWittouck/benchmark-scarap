@@ -3,11 +3,11 @@
 # This script will run the OrthoBench pangenome evaluation script on the 
 # orthobench-formatted output of a number of pangenome tools. 
 
-din_faas=../../data/OrthoBench_v1.1/Input
-din_pangenomes=../../results/benchmarks/orthobench/orthobench_formatted
-dout=../../results/benchmarks/orthobench/benchmarks
+din_faas=../../data/orthobench/OrthoBench_v1.1/Input
+din_pangenomes=../../results/scarap_pan/orthobench/orthobench_formatted
+dout=../../results/scarap_pan/orthobench/benchmarks
 
-fin_orthobench_script=../../data/OrthoBench_v1.1/benchmark.py
+fin_orthobench_script=../../data/orthobench/OrthoBench_v1.1/benchmark.py
 
 # create output folder
 [ -d $dout ] || mkdir $dout

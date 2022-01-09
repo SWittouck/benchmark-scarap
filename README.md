@@ -1,29 +1,29 @@
-# Pangenome tool
+# Benchmark SCARAP
 
-The goal of this project is to benchmark the pangenome pipeline of SCARAP against various publicly available pangenome tools. 
+The goal of this project is to demonstrate the pan, core and clust modules of the SCARAP toolkit for prokaryotic comparative genomics. 
 
-As benchmark dataset, we will use one representative genome for each genus of Lactobacillales (as defined by the GTDB).
+The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Three benchmark datasets are used: (1) one representative genome for each genus of Lactobacillales, (2) OrthoBench and (3) paraBench. The core and clust modules are demonstrated on a dataset with Lactiplantibacillus plantarum genomes. 
 
 ## Data
 
-`genomes_lactobacillales.tsv` 
+`lactobacillales_genera/genomes.tsv` 
 
 * subset of the table `bac120_metadata_r89.tsv`, downloaded from the GTDB
 * NCBI assembly accession number and genus name for one representative genome per genus of Lactobacillales
 * created by the script `src/01_dataprep_lactobacillales/01_select_accessions.R`
 
-`genomes_lactobacillales_ncbi`
+`lactobacillales_genera/genomes_ncbi`
 
 * fna files for one representative genome per genus of Lactobacillales
 * downloaded by the script `src/01_dataprep_lactobacillales/02_download_genomes.R`
 
-`OrthoBench_v1.1`
+`orthobench/OrthoBench_v1.1`
 
 * downloaded from <https://github.com/davidemms/Open_Orthobench/releases>
 * gzipped all proteomes (`gzip Input/*.fa`)
 * instructions on how to benchmark: <https://github.com/davidemms/Open_Orthobench>
 
-`paraBench`
+`parabench/paraBench`
 
 * cloned from <https://github.com/rderelle/paraBench> (commit 05cae01)
 * unzipped four zip files with proteomes and put them in data/proteomes
@@ -31,7 +31,7 @@ As benchmark dataset, we will use one representative genome for each genus of La
 * gzipped all proteomes (`gzip data/proteomes/*.fasta`)
 * gave the script paraBench.py execution permission
 
-`QfO_release_2018_04`
+`qfo2018/QfO_release_2018_04`
 
 * Quest for Orthologs reference datasets (2018)
 * `ftp://ftp.ebi.ac.uk/pub/databases/reference_proteomes/previous_releases/qfo_release-2018_04/QfO_release_2018_04.tar.gz`

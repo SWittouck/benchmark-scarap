@@ -10,9 +10,9 @@ library(tidyverse)
 source("functions.R")
   
 # define paths 
-dio_orthobench = "../../results/benchmarks/orthobench"
-dio_parabench = "../../results/benchmarks/parabench"
-dio_lactos = "../../results/benchmarks/lactobacillales"
+dio_orthobench = "../../results/scarap_pan/orthobench"
+dio_parabench = "../../results/scarap_pan/parabench"
+dio_lactos = "../../results/scarap_pan/lactobacillales"
 
 # compile and write resource consumption tables
 for (dio in c(dio_orthobench, dio_parabench, dio_lactos)) {

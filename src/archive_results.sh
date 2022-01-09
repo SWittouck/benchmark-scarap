@@ -1,6 +1,6 @@
 #!/usr/bin/env bash 
 
-cd ../results/benchmarks
+cd ../results/scarap_pan
 tar czf benchmark_scarap_v2-beta.tar.gz \
   README.md \
   orthobench/pangenomes.csv \

@@ -1,12 +1,15 @@
 #!/usr/bin/env Rscript
 
+# This script will select GenBank accession numbers of genus representatives
+# of the order Lactobacillales. 
+
 # dependencies: tidyverse v1.2.1
 
 library(tidyverse)
 
 url_gtdb <- "https://data.ace.uq.edu.au/public/gtdb/data/releases/release89/89.0/bac120_metadata_r89.tsv"
-fout_metadata <- "../../data/bac120_metadata_r89.tsv"
-fout_accessions <- "../../data/genomes_lactobacillales.tsv"
+fout_metadata <- "../../data/lactobacillales_genera/bac120_metadata_r89.tsv"
+fout_accessions <- "../../data/lactobacillales_genera/genomes.tsv"
 
 if (! file.exists(fout_metadata)) {
   download.file(url_gtdb, destfile = fout_metadata)

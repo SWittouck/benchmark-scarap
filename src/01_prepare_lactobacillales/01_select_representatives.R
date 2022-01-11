@@ -5,16 +5,24 @@
 # species/genus is chosen as representative. As a consequence, the genus 
 # representatives are a subset of the species representatives. 
 
-# dependencies: R V3.6.1, tidyverse v1.2.1
+# dependencies: R v3.6.1, tidyverse v1.2.1
 
 library(tidyverse)
 
 # define paths
 url_gtdb <- "https://data.ace.uq.edu.au/public/gtdb/data/releases/release89/89.0/bac120_metadata_r89.tsv"
 fout_metadata <- "../../data/lactobacillales/bac120_metadata_r89.tsv"
-fout_accessions_species <- "../../data/lactobacillales/accessions_speciesreps.tsv"
-fout_accessions_genera <- "../../data/lactobacillales/accessions_genusreps.tsv"
+dout <- "../../data/lactobacillales"
 
+# define derived paths
+fout_metadata <- paste0(dout, "/bac120_metadata_r89.tsv")
+fout_accessions_species <- paste0(dout, "/accessions_speciesreps.tsv")
+fout_accessions_genera <- paste0(dout, "/accessions_genusreps.tsv")
+
+# create output folder
+if (! dir.exists(dout)) dir.create(dout)
+
+# download genome metadata file from the GTDB
 if (! file.exists(fout_metadata)) {
   download.file(url_gtdb, destfile = fout_metadata)
 }
@@ -49,4 +57,5 @@ genomes %>%
   select(genome = ncbi_genbank_assembly_accession, gtdb_genus) %>%
   write_tsv(fout_accessions_genera, col_names = F)
 
+# remove large file with raw genome metadata
 file.remove(fout_metadata)

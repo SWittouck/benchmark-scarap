@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
 # This script will perform gene prediction for representative genomes of the 
-# genera of the order Lactobacillales. 
+# species of the order Lactobacillales. (Genus representatives are a subset of 
+# this dataset.)
 
 # dependency: prodigal version 2.6.3
 
 threads=16
 
-din_fnas=../../data/lactobacillales_genera/genomes_ncbi
-dout_prodigal=../../results/lactobacillales_genera/genes
+din_fnas=../../data/lactobacillales/genomes_ncbi
+dout_prodigal=../../results/lactobacillales/speciesreps
 
 # make output dirs if they don't exist
 for dout in $dout_prodigal/{gffs,ffns,faas,logs} ; do

@@ -7,7 +7,8 @@
 
 din_orthobench=../../data/orthobench/OrthoBench_v1.1/Input # *.fa.gz
 din_parabench=../../data/parabench/paraBench/data/proteomes # *.fasta.gz
-din_lactos=../../results/lactobacillales/genusreps/faas # *.faa.gz
+din_lacto_genusreps=../../results/lactobacillales/genusreps/faas # *.faa.gz
+din_lacto_speciesreps=../../results/lactobacillales/speciesreps/faas # *.faa.gz
 dout_root=../../results/scarap_pan
 
 threads=16
@@ -65,8 +66,8 @@ benchmark_broccoli() {
 
 # BENCHMARKING CODE
 
-dins=( $din_orthobench $din_parabench $din_lactos )
-datasets=( orthobench parabench lactobacillales )
+dins=( $din_orthobench $din_parabench $din_lacto_genusreps )
+datasets=( orthobench parabench lactobacillales_genusreps )
 
 for i in ${!dins[@]} ; do
 
@@ -98,3 +99,8 @@ for i in ${!dins[@]} ; do
   gzip $din/*
 
 done
+
+# run SCARAP FH on Lactobacillales species representatives
+dout=$dout_root/lactobacillales_speciesreps
+[ -d $dout ] || mkdir $dout
+benchmark_scarap $din_lacto_speciesreps $dout/scarap_fh FH

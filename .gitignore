@@ -1,6 +1,7 @@
-.Rproj.user/*
-data/*
-results/*
-src/benchmarkscripts_in_progress/*
-src/experiments/*
-src/old/*
+.Rproj.user/
+data/
+results/
+src/benchmarkscripts_in_progress/
+src/experiments/
+src/old/
+intermediate_orthoparabench/

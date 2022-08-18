@@ -22,10 +22,10 @@ threads=16
 [ -d $dout/core100_mean90 ] || mkdir $dout/core100_mean90
 
 # perform maximum novelty sampling
-# /usr/bin/time -v -o $dout/corefull_mean/stats.txt scarap sample \
-#   $din_ffns $fin_corefull $dout/corefull_mean -t $threads -c
-# /usr/bin/time -v -o $dout/core100_mean/stats.txt scarap sample \
-#   $din_ffns $fin_core100 $dout/core100_mean -t $threads -c
+/usr/bin/time -v -o $dout/corefull_mean/stats.txt scarap sample \
+  $din_ffns $fin_corefull $dout/corefull_mean -t $threads -c
+/usr/bin/time -v -o $dout/core100_mean/stats.txt scarap sample \
+  $din_ffns $fin_core100 $dout/core100_mean -t $threads -c
 /usr/bin/time -v -o $dout/corefull_mean90/stats.txt scarap sample \
   $din_ffns $fin_corefull $dout/corefull_mean90 -t $threads -c --method mean90
 /usr/bin/time -v -o $dout/core100_mean90/stats.txt scarap sample \

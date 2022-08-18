@@ -6,7 +6,7 @@
 din_faas=../../results/lplantarum/faas
 dout=../../results/scarap_core/lplantarum
 
-threads=16
+threads=32
 
 # create output folder and its parent
 [ -d $(dirname $dout) ] || mkdir $(dirname $dout)
@@ -17,7 +17,7 @@ threads=16
 [ -d $dout/core100 ] || mkdir $dout/core100
 
 # infer core genome
-/usr/bin/time -v -o $dout/corefull/stats.txt scarap core \
-  $din_faas $dout/corefull -t $threads -c
+# /usr/bin/time -v -o $dout/corefull/stats.txt scarap core \
+#   $din_faas $dout/corefull -t $threads -c
 /usr/bin/time -v -o $dout/core100/stats.txt scarap core \
-  $din_faas $dout/core100 -t $threads -c --max_cores 100
+  $din_faas $dout/core100 -t $threads -c --max-core-genes 100

@@ -36,4 +36,4 @@ genomes %>%
   write_tsv(fout_accessions, col_names = F)
 
 # remove large file with raw genome metadata
-# file.remove(fout_metadata)
+file.remove(fout_metadata)

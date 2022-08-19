@@ -1,21 +1,30 @@
 # Benchmark SCARAP
 
-The goal of this project is to demonstrate the pan, core and clust modules of the SCARAP toolkit for prokaryotic comparative genomics. 
+The goal of this project is to demonstrate the pan, core and sample modules of the SCARAP toolkit for prokaryotic comparative genomics. 
 
-The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Three benchmark datasets are used: (1) one representative genome for each genus of Lactobacillales, (2) OrthoBench and (3) paraBench. The core and clust modules are demonstrated on a dataset with Lactiplantibacillus plantarum genomes. 
+The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Three main benchmark datasets are used: (1) one representative genome for each genus of Lactobacillales, (2) OrthoBench and (3) paraBench. The core and clust modules are demonstrated on a dataset with Lactiplantibacillus plantarum genomes. 
 
 ## Data
 
-`lactobacillales_genera/genomes.tsv` 
+`lactobacillales` 
 
-* subset of the table `bac120_metadata_r89.tsv`, downloaded from the GTDB
-* NCBI assembly accession number and genus name for one representative genome per genus of Lactobacillales
-* created by the script `src/01_dataprep_lactobacillales/01_select_accessions.R`
+* `accessions_genusreps.tsv` and `accessions_speciesreps.tsv`:
+    * subsets of the table `bac120_metadata_r89.tsv`, downloaded from the GTDB
+    * NCBI assembly accession number and genus name for one representative genome per genus/species of Lactobacillales
+    * created by the script `src/01_prepare_lactobacillales/01_select_representatives.R`
+* `genomes_ncbi`
+    * fna file for one representative genome per species of Lactobacillales
+    * downloaded by the script `scr/01_prepare_lactobacillales/02_download_genomes.sh`
 
-`lactobacillales_genera/genomes_ncbi`
+`lplantarum` 
 
-* fna files for one representative genome per genus of Lactobacillales
-* downloaded by the script `src/01_dataprep_lactobacillales/02_download_genomes.R`
+* `accessions.txt`:
+    * subset of the table `bac120_metadata_r89.tsv`, downloaded from the GTDB
+    * NCBI assembly accession number for all genomes of the species Lactiplantibacillus plantarum
+    * created by the script `src/02_prepare_lplantarum/01_select_accessions.R`
+* `genomes_ncbi`
+    * fna file for each genome of the species L. plantarum
+    * downloaded by the script `scr/02_prepare_lplantarum/02_download_genomes.sh`
 
 `orthobench/OrthoBench_v1.1`
 
@@ -31,7 +40,7 @@ The pangenome pipeline of SCARAP (pan module) is benchmarked against various pub
 * gzipped all proteomes (`gzip data/proteomes/*.fasta`)
 * gave the script paraBench.py execution permission
 
-`qfo2018/QfO_release_2018_04`
+`qfo2018/QfO_release_2018_04` (currently not used for the benchmarks)
 
 * Quest for Orthologs reference datasets (2018)
 * `ftp://ftp.ebi.ac.uk/pub/databases/reference_proteomes/previous_releases/qfo_release-2018_04/QfO_release_2018_04.tar.gz`
@@ -59,9 +68,9 @@ The pangenome pipeline of SCARAP (pan module) is benchmarked against various pub
 * made sure that the `python` command referred to python3
 * installed python modules with pip3: networkx and cffi
 
-[MMseqs2 commit d36dea2](https://github.com/soedinglab/MMseqs2)
+[MMseqs2 commit 45111b6 (version 13)](https://github.com/soedinglab/MMseqs2)
 
-* don't remember how I installed (I should maybe upgrade)
+* downloaded the pre-compiled archive from GitHub
 
 [PIRATE v1.0.4](https://github.com/SionBayliss/PIRATE)
 

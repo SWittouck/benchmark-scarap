@@ -1,4 +1,6 @@
-## utilities 
+##############
+# Utilities  #
+##############
 
 #' Return a named list with subdirectories except "orthobench_format"
 #' 
@@ -11,7 +13,9 @@ toolsubdirs <- function(dir) {
     `names<-`(., str_extract(., "[^/]+$"))
 }
 
-## time/memory statistics parsing 
+##################################
+# Time/memory statistics parsing #
+##################################
 
 #' Read time/memory statistics file
 #' 
@@ -51,7 +55,9 @@ read_stats <- function(dins) {
     reduce(bind_rows)
 }
 
-## pangenome parsing
+#####################
+# Pangenome parsing #
+#####################
 
 #' Convert pangenomes to individual orthobench-format files
 #'
@@ -221,7 +227,9 @@ compile_pangenomes <- function(dins, has_genomes) {
   
 }
 
-## benchmark results parsing 
+##############################
+# Benchmark results parsing  #
+##############################
 
 #' Read OrthoBench benchmarking output file
 #' 
@@ -306,7 +314,9 @@ read_parabench_files <- function(din) {
     reduce(bind_rows)
 }
 
-## unused
+###########
+# Unused  #
+###########
 
 compile_times <- function(dins) {
   

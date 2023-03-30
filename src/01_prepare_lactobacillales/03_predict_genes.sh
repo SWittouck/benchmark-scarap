@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script will perform gene prediction for representative genomes of the 
+# This script performs gene prediction for representative genomes of the 
 # species of the order Lactobacillales. (Genus representatives are a subset of 
 # this dataset.)
 

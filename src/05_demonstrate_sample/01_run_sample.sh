@@ -1,13 +1,13 @@
-# This script performs maximum novelty sampling on a set of L. plantarum 
+# This script performs maximum novelty sampling on a set of Lactiplantibacillus
 # genomes; first given then full core genome, then given a set of 100 core 
 # genes.
 
-# dependencies: SCARAP commit b096905
+# dependencies: SCARAP v0.4.0
 
-din_ffns=../../results/lplantarum/ffns
-fin_corefull=../../results/scarap_core/lplantarum/corefull/coregenome.tsv
-fin_core100=../../results/scarap_core/lplantarum/core100/coregenome.tsv
-dout=../../results/scarap_sample/lplantarum
+din_ffns=../../results/lactiplantibacillus/ffns
+fin_corefull=../../results/scarap_core/lactiplantibacillus/corefull/genes.tsv
+fin_core100=../../results/scarap_core/lactiplantibacillus/core100/genes.tsv
+dout=../../results/scarap_sample/lactiplantibacillus
 
 threads=16
 
@@ -21,7 +21,7 @@ threads=16
 [ -d $dout/corefull_mean90 ] || mkdir $dout/corefull_mean90
 [ -d $dout/core100_mean90 ] || mkdir $dout/core100_mean90
 
-# perform maximum novelty sampling
+# perform maximum novelty sampling (-c flag necessary because of time tool)
 /usr/bin/time -v -o $dout/corefull_mean/stats.txt scarap sample \
   $din_ffns $fin_corefull $dout/corefull_mean -t $threads -c
 /usr/bin/time -v -o $dout/core100_mean/stats.txt scarap sample \

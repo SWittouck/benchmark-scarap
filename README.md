@@ -2,7 +2,7 @@
 
 The goal of this project is to demonstrate the pan, core and sample modules of the SCARAP toolkit for prokaryotic comparative genomics. 
 
-The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Three main benchmark datasets are used: (1) one representative genome for each genus of Lactobacillales, (2) OrthoBench and (3) paraBench. The core and clust modules are demonstrated on a dataset with Lactiplantibacillus plantarum genomes. 
+The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Three main benchmark datasets are used: (1) one representative genome for each genus of Lactobacillales, (2) OrthoBench and (3) paraBench. The core and sample modules are demonstrated on a dataset with Lactiplantibacillus genomes. 
 
 ## Data
 
@@ -16,7 +16,7 @@ The pangenome pipeline of SCARAP (pan module) is benchmarked against various pub
     * fna file for one representative genome per species of Lactobacillales
     * downloaded by the script `scr/01_prepare_lactobacillales/02_download_genomes.sh`
 
-`lplantarum` 
+`lactiplantibacillus` 
 
 * `accessions.txt`:
     * subset of the table `bac120_metadata_r89.tsv`, downloaded from the GTDB
@@ -47,15 +47,42 @@ The pangenome pipeline of SCARAP (pan module) is benchmarked against various pub
 
 ## Dependencies
 
-[SCARAP v0.3.1](https://github.com/SWittouck/SCARAP)
+### General dependencies 
 
-[OrthoFinder v2.3.11](https://github.com/davidemms/OrthoFinder)
+R-related dependencies: 
 
-* downloaded the release with prepackaged executables
+* R v4.1.2
+* tidyverse v2.0.0
 
-[SonicParanoid v1.3.0](http://iwasakilab.bs.s.u-tokyo.ac.jp/sonicparanoid/)
+### Pangenome tools used
 
-* followed the instructions for Linux on the website
+[SCARAP v0.4.0](https://github.com/SWittouck/SCARAP)
+
+* Install the dependencies listed on the GitHub README file. 
+* Clone SCARAP from GitHub. 
+* Make `scarap` point to `.../SCARAP/bin/scarap/scarap.py`. 
+
+[OrthoFinder v2.5.4](https://github.com/davidemms/OrthoFinder)
+
+* Install BLAST: `sudo apt install ncbi-blast+`. 
+* Download the release with prepackaged executables.
+* Make `orthofinder` point to `.../OrthoFinder/orthofinder`. 
+* Remark: this OrthoFinder version didn't work with MMseqs2 version 6b93884, so to run OrthoFinder with MMseqs2 I ran OrthoFinder version bc18fe5 (directly cloned from GitHub). 
+
+[SonicParanoid v1.3.8](http://iwasakilab.bs.s.u-tokyo.ac.jp/sonicparanoid/)
+
+* Downloaded the tarball with source code from GitLab.
+* In the file `setup.py, change `python_requires=">=3.6, <3.10"` to `python_requires=">=3.6, <3.11"``.
+* From within the sonicparanoid folder, Run `pip3 install ./`. 
+
+[Broccoli v1.2](https://github.com/rderelle/Broccoli)
+
+* Install fasttree: `sudo apt install fasttree`.
+* Install diamond. 
+* Download the tarball with the source code from GitHub. 
+* Create a script in your bin folder with the following code: `python3 .../broccoli.py #@` (replace ... with the full path). 
+
+### Some other pangenome tools (currently unused)
 
 [PEPPAN v1.0](https://github.com/zheminzhou/PEPPA)
 
@@ -87,8 +114,3 @@ The pangenome pipeline of SCARAP (pan module) is benchmarked against various pub
     * ran `conda env create -f panX-environment.yml`
     * created a symbolic link to panX.py (just named "panX") in `~/bin/`
 * to use panX, first activiate its conda environment by running `source activate panX`
-
-R-related dependencies: 
-
-* R v3.6.3
-* tidyverse v1.3.0

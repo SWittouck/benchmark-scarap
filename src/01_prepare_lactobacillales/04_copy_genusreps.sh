@@ -1,8 +1,8 @@
 #!/usr/bin/env bash 
 
-# This script will copy the faa files of Lactobacillales genus representatives
-# to a dedicated folder from a folder with faa files of Lactobacillales species 
-# representatives. 
+# This script copies the faa files of Lactobacillales genus representatives
+# to a dedicated folder from a folder with faa files of Lactobacillales species
+# representatives.
 
 # specify paths
 din_speciesreps=../../results/lactobacillales/speciesreps/faas

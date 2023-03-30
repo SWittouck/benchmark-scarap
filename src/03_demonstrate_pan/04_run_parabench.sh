@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-# This script will run the ParaBench pangenome evaluation script on the 
+# This script runs the ParaBench pangenome evaluation script on the 
 # orthobench-formatted output of a number of pangenome tools. 
 
+# define paths for input/output
 din_pangenomes=../../results/scarap_pan/parabench/orthobench_formatted
 dout=../../results/scarap_pan/parabench/benchmarks
 
+# define path of parabench script
 din_parabench_script=../../data/parabench/paraBench
 
 # create output folder

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 # This script runs a set of pangenome tools on a set of test databases 
-# containing genomes (faa files). 
+# containing proteomes (faa files). 
 
-# dependencies: SCARAP fe2ae66
+# dependencies: SCARAP v0.4.0, OrthoFinder v2.5.4, SonicParanoid v1.3.8, 
+# broccoli v1.2
 
 din_orthobench=../../data/orthobench/OrthoBench_v1.1/Input # *.fa.gz
 din_parabench=../../data/parabench/paraBench/data/proteomes # *.fasta.gz

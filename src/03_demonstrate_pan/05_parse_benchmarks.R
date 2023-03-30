@@ -1,7 +1,8 @@
 #!/usr/bin/Rscript
 
-# This script will parse the orthobench and parabench output files into nice
-# tables.
+# This script parses the orthobench and parabench output files into nice tables.
+
+# depencencies: R v4.1.2, tidyverse v2.0.0
 
 library(tidyverse)
 

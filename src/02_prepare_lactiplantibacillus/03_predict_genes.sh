@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# This script will perform gene prediction for genomes of the species 
-# Lactiplantibacillus plantarum. 
+# This script performs gene prediction for genomes of the genus 
+# Lactiplantibacillus. 
 
 # dependency: prodigal version 2.6.3
 
 threads=16
 
-din_fnas=../../data/lplantarum/genomes_ncbi
-dout_prodigal=../../results/lplantarum
+din_fnas=../../data/lactiplantibacillus/genomes_ncbi
+dout_prodigal=../../results/lactiplantibacillus
 
 # make output dirs if they don't exist
 for dout in $dout_prodigal/{gffs,ffns,faas,logs} ; do

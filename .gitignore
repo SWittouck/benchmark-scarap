@@ -2,7 +2,7 @@
 data/
 intermediate_orthoparabench/
 results/
-src/demonstrate_pan_fqo2018/
+src/demonstrate_pan_qfo2018/
 src/experiments/
 src/old/
 src/other_pangenome_tools/

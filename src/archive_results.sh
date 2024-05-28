@@ -23,4 +23,6 @@ tar czf benchmark_scarap_v3.tar.gz \
   scarap_sample/lactiplantibacillus/corefull_mean90/identities.tsv \
   scarap_sample/lactiplantibacillus/corefull_mean90/seeds.txt \
   scarap_sample/lactiplantibacillus/core100_mean90/identities.tsv \
-  scarap_sample/lactiplantibacillus/core100_mean90/seeds.txt
+  scarap_sample/lactiplantibacillus/core100_mean90/seeds.txt \
+  scarap_sample/lactiplantibacillus/tree/lactiplantibacillus.treefile
+  

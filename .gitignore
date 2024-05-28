@@ -1,7 +1,8 @@
 .Rproj.user/
 data/
+intermediate_orthoparabench/
 results/
-src/benchmarkscripts_in_progress/
+src/demonstrate_pan_fqo2018/
 src/experiments/
 src/old/
-intermediate_orthoparabench/
+src/other_pangenome_tools/

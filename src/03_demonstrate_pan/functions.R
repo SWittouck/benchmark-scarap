@@ -86,9 +86,11 @@ pangenomes_to_orthobench <- function(fin, dout) {
 #' Given the output directory of a pangenome tool, this function searches for
 #' the pangenome file and reads it into a table with the columns "gene",
 #' "genome" (if available) and "orthogroup". The function supports pangenomes
-#' computed with OrthoFinder, SonicParanoid, Broccoli and SCARAP.
+#' computed with OrthoFinder, SonicParanoid, Broccoli, PIRATE and SCARAP.
 #' 
-#' Remark: for Broccoli pangenomes, ORFans are not included in the output. 
+#' Remark: for Broccoli pangenomes, ORFans are not included in the output. For
+#' PIRATE pangenomes, some genes are not present in the output because they 
+#' are filtered out by PIRATE (e.g. short genes). 
 #'
 #' @param din The output directory of a pangenome tool.
 #' @return A pangenome table (tibble).
@@ -97,13 +99,20 @@ read_pangenome <- function(din) {
   files <- list.files(din, include.dirs = T) 
   
   if ("OrthoFinder" %in% files) {
+    message("OrthoFinder pangenome detected")
     read_pangenome_orthofinder(din) 
   } else if ("runs" %in% files) {
+    message("SonicParanoid pangenome detected")
     read_pangenome_sonicparanoid(din) 
   } else if ("pangenome.tsv" %in% files) {
+    message("SCARAP pangenome detected")
     read_pangenome_scarap(din) 
   } else if ("orthologous_groups.txt" %in% files) {
+    message("Broccoli pangenome detected")
     read_pangenome_broccoli(din)
+  } else if ("PIRATE.gene_families.tsv" %in% files) {
+    message("PIRATE pangenome detected")
+    read_pangenome_pirate(din)
   } else {
     files
   }
@@ -190,6 +199,46 @@ read_pangenome_broccoli <- function(path) {
   fin %>%
     read_tsv(skip = 1, col_types = cols(), col_names = colnames) %>%
     separate_rows(gene, sep = " ")
+  
+}
+
+# helper for read_pangenome
+read_pangenome_pirate <- function(path) {
+  
+  fin <- paste0(path, "/PIRATE.gene_families.tsv")
+  if (! file.exists(fin)) return(NULL)
+  pan <- 
+    fin %>%
+    read_tsv(col_types = cols()) %>%
+    select(orthogroup = gene_family, 21:last_col()) %>%
+    pivot_longer(
+      - orthogroup, names_to = "genome", values_to = "gene_pirate", 
+      values_drop_na = T
+    ) %>%
+    mutate(gene_pirate = str_remove_all(gene_pirate, "[()]")) %>%
+    mutate(gene_pirate = str_replace_all(gene_pirate, ":", ";")) %>%
+    separate_rows(gene_pirate, sep = ";")
+  genes <- 
+    paste0(path, "/modified_gffs") %>%
+    list.files(full.names = T) %>%
+    map(function(path) {
+      message(paste0("PIRATE - extracting gene names from ", basename(path)))
+      path %>%
+        read_tsv(
+          comment = "#", col_names = F, col_select = c(1, 9), 
+          col_types = c("cc"), lazy = F
+        ) %>%
+        filter(! is.na(X9)) %>%
+        rename(contig = X1, attributes = X9) %>%
+        mutate(gene_pirate = str_extract(attributes, "(?<=ID=)[^;]+")) %>%
+        mutate(gene = str_extract(attributes, "(?<=prev_ID=)[^;]+")) %>%
+        mutate(gene = str_c(contig, str_extract(gene, "_[^_]+$"), sep = "")) %>%
+        select(gene_pirate, gene)
+    }) %>%
+    reduce(.f = bind_rows)
+  pan %>%
+    left_join(genes, by = "gene_pirate") %>%
+    select(gene, genome, orthogroup)
   
 }
 

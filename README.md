@@ -60,6 +60,10 @@ R-related dependencies:
 * Download the tarball with the source code from GitHub. 
 * Create a script in your bin folder with the following code: `python3 .../broccoli.py #@` (replace ... with the full path). 
 
+[PIRATE v1.0.5](https://github.com/SionBayliss/PIRATE)
+
+* Install using conda
+
 ## Datasets
 
 Here follows a brief description of the files in the benchmark datasets.

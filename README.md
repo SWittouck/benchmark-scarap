@@ -8,7 +8,7 @@ The pangenome pipeline of SCARAP (pan module) is benchmarked against various pub
 
 Step 1: clone this repository and create a data folder within it: `mkdir data`. 
 
-Step 2: prepare the OrthoBench benchmark dataset. 
+Step 2: manually prepare the OrthoBench benchmark dataset. 
 
 1. Create a folder `data/orthobench` and go to it: `mkdir data/orthobench ; cd data/orthobench`. 
 1. Download the file `BENCHMARKS.tar.gz` from the [Open_Orthobench repository](https://github.com/davidemms/Open_Orthobench/releases), release v1.1. 
@@ -16,7 +16,7 @@ Step 2: prepare the OrthoBench benchmark dataset.
 1. Rename the unarchived folder to `OrthoBench_v1.1`. 
 1. Compress the proteomes: `gzip OrthoBench_v1.1/Input/.fa`. 
 
-Step 3: prepare the paraBench benchmark dataset. 
+Step 3: manually prepare the paraBench benchmark dataset. 
 
 1. Create a folder `data/parabench` and go to it: `mkdir data/parabench ; cd data/parabench`. 
 1. Clone the paraBench repository from <https://github.com/rderelle/paraBench> (commit 05cae01).
@@ -25,9 +25,17 @@ Step 3: prepare the paraBench benchmark dataset.
 1. Compress all proteomes: `gzip proteomes/*.fasta`. 
 1. Give the script paraBench.py execution permission: `sudo chmod u+x paraBench.py`. 
 
-Step 4: install all dependencies (see [Dependencies](#dependencies) section). 
+Step 4: install all dependencies except Broccoli in a virtual environment and activate it: 
 
-Step 5: run the scripts in `src` in the order indicated by the file and folder name prefixes. 
+    conda env create -f environment.yml --prefix ./env
+    conda activate ./env
+    
+Step 5: manually install Broccoli: 
+
+1. Download the tarball with the source code from GitHub and unpack. 
+1. Create a script in `~/bin/` with the following code: `python3 <path-to-repo>/broccoli.py #@` 
+
+Step 6: run the scripts in `src` in the order indicated by the file and folder name prefixes. 
 
 ## Dependencies
 
@@ -36,33 +44,15 @@ R-related dependencies:
 * R v4.1.2
 * tidyverse v2.0.0
 
-[SCARAP v0.4.0](https://github.com/SWittouck/SCARAP)
+gene prediction: Prodigal 
 
-* Follow the instructions on the SCARAP GitHub page. 
+pangenome tools: 
 
-[OrthoFinder v2.5.4](https://github.com/davidemms/OrthoFinder)
-
-* Install BLAST: `sudo apt install ncbi-blast+`. 
-* Download the release with prepackaged executables.
-* Make `orthofinder` point to `.../OrthoFinder/orthofinder`. 
-* Remark: this exact OrthoFinder version doesn't work with MMseqs2 version 6b93884, so to run OrthoFinder with MMseqs2 you can use OrthoFinder version bc18fe5 (clone directly from GitHub). 
-
-[SonicParanoid v1.3.8](http://iwasakilab.bs.s.u-tokyo.ac.jp/sonicparanoid/)
-
-* Downloaded the tarball with source code from GitLab.
-* In the file `setup.py`, change `python_requires=">=3.6, <3.10"` to `python_requires=">=3.6, <3.11"`.
-* From within the sonicparanoid folder, Run `pip3 install ./`. 
-
-[Broccoli v1.2](https://github.com/rderelle/Broccoli)
-
-* Install fasttree: `sudo apt install fasttree`.
-* Install diamond. 
-* Download the tarball with the source code from GitHub. 
-* Create a script in your bin folder with the following code: `python3 .../broccoli.py #@` (replace ... with the full path). 
-
-[PIRATE v1.0.5](https://github.com/SionBayliss/PIRATE)
-
-* Install using conda
+* [SCARAP v0.4.0](https://github.com/SWittouck/SCARAP)
+* [OrthoFinder v2.5.2](https://github.com/davidemms/OrthoFinder)
+* [SonicParanoid v1.3.8](https://gitlab.com/salvo981/sonicparanoid2)
+* [Broccoli v1.2](https://github.com/rderelle/Broccoli)
+* [PIRATE v1.0.5](https://github.com/SionBayliss/PIRATE)
 
 ## Datasets
 

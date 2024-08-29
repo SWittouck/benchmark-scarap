@@ -13,9 +13,9 @@ toolsubdirs <- function(dir) {
     `names<-`(., str_extract(., "[^/]+$"))
 }
 
-##################################
-# Time/memory statistics parsing #
-##################################
+###############################
+# Resource statistics parsing #
+###############################
 
 #' Read time/memory statistics file
 #' 
@@ -224,15 +224,15 @@ read_pangenome_pirate <- function(path) {
     map(function(path) {
       message(paste0("PIRATE - extracting gene names from ", basename(path)))
       path %>%
-        read_tsv(
-          comment = "#", col_names = F, col_select = c(1, 9), 
-          col_types = c("cc"), lazy = F
-        ) %>%
-        filter(! is.na(X9)) %>%
-        rename(contig = X1, attributes = X9) %>%
+        read_lines() %>%
+        {.[1:which(str_detect(., "^##FASTA"))]} %>%
+        {.[! str_detect(., "^#")]} %>%
+        tibble(all = .) %>%
+        separate(all, into = str_c("X", 1:9), sep = "\t") %>%
+        select(contig = X1, feature = X3, attributes = X9) %>%
+        filter(feature == "CDS") %>%
         mutate(gene_pirate = str_extract(attributes, "(?<=ID=)[^;]+")) %>%
         mutate(gene = str_extract(attributes, "(?<=prev_ID=)[^;]+")) %>%
-        mutate(gene = str_c(contig, str_extract(gene, "_[^_]+$"), sep = "")) %>%
         select(gene_pirate, gene)
     }) %>%
     reduce(.f = bind_rows)
@@ -276,9 +276,9 @@ compile_pangenomes <- function(dins, has_genomes) {
   
 }
 
-##############################
-# Benchmark results parsing  #
-##############################
+#########################
+# Pangenome evaluation  #
+#########################
 
 #' Read OrthoBench benchmarking output file
 #' 
@@ -361,6 +361,48 @@ read_parabench_files <- function(din) {
     map(read_parabench_file) %>%
     keep(~ ! is.null(.)) %>%
     reduce(bind_rows)
+}
+
+#' Compute the f-measure
+#' 
+#' Given a vector with predicted groups and a vector with reference groups of 
+#' objects, this function calculates the precision, recall and f-measure of the
+#' predicted groups.  
+#' 
+#' @param group_pred A vector with predicted groups. 
+#' @param group_ref A vector with reference groups. 
+#' 
+#' @return A list with the elements "precision", "recall" and "f_measure".
+f_measure <- function(group_pred, group_ref) {
+  
+  pan <- 
+    tibble(cluster_pred = group_pred, cluster_ref = group_ref) %>%
+    filter(! is.na(cluster_ref))
+  
+  counts <- 
+    pan %>% 
+    filter(! is.na(cluster_pred)) %>%
+    count(cluster_ref, cluster_pred)
+  clusters_ref <-
+    counts %>%
+    group_by(cluster_ref) %>%
+    summarize(majority_pred_cluster = cluster_pred[which.max(n)])
+  clusters_pred <-
+    counts %>%
+    group_by(cluster_pred) %>%
+    summarize(majority_ref_cluster = cluster_ref[which.max(n)])
+  pan %>%
+    left_join(clusters_ref, by = "cluster_ref") %>%
+    left_join(clusters_pred, by = "cluster_pred") %>%
+    summarize(
+      precision = sum(majority_ref_cluster == cluster_ref, na.rm = T) / n(),
+      recall = sum(majority_pred_cluster == cluster_pred, na.rm = T) / n()
+    ) %>%
+    {list(
+      precision = .$precision, recall = .$recall,
+      f_measure = 2 / ((1 / .$precision) + (1 / .$recall))
+    )}
+  
 }
 
 ###########

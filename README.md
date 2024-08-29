@@ -2,7 +2,7 @@
 
 The goal of this project is to demonstrate the pan, core and sample modules of the SCARAP toolkit for prokaryotic comparative genomics. 
 
-The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Three main benchmark datasets are used: (1) one representative genome for each genus of *Lactobacillales*, (2) OrthoBench and (3) paraBench. The core and sample modules are demonstrated on a dataset with *Lactiplantibacillus* genomes. 
+The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Four main benchmark datasets are used: (1) one representative genome for each genus of *Lactobacillales*, (2) OrthoBench, (3) paraBench and (4) simulated genomes by Tonkin-Hill et al. (2020). The core and sample modules are demonstrated on a dataset with *Lactiplantibacillus* genomes. 
 
 ## How to run 
 
@@ -44,7 +44,7 @@ R-related dependencies:
 * R v4.1.2
 * tidyverse v2.0.0
 
-gene prediction: Prodigal 
+gene prediction and translation: Prodigal, genometools
 
 pangenome tools: 
 
@@ -86,3 +86,9 @@ Here follows a brief description of the files in the benchmark datasets.
 `data/parabench/paraBench`
 
 * proteomes and benchmarking code for the paraBench dataset
+
+`data/tonkinhill`
+
+* genomes simulated using an E. coli genome as starting point
+* one dataset out of three sets of simulations; version with assemblies from simulated reads
+* reference: [Tonkin-Hill et al., 2020, Genome Biology](https://doi.org/10.1186/s13059-020-02090-4)

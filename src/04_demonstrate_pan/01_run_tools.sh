@@ -95,7 +95,7 @@ datasets=( lactobacillales_genusreps tonkinhill )
 for i in ${!dins[@]} ; do
 
   din=${dins[i]}
-  dout=$dout_root/${datasets[i]}/tools
+  dout=$dout_root/${datasets[i]}/runs
 
   # create output folder
   [ -d $dout ] || mkdir -p $dout
@@ -121,7 +121,7 @@ datasets=( orthobench parabench lactobacillales_genusreps tonkinhill )
 for i in ${!dins[@]} ; do
 
   din=${dins[i]}
-  dout=$dout_root/${datasets[i]}/tools
+  dout=$dout_root/${datasets[i]}/runs
 
   # create output folder
   [ -d $dout ] || mkdir -p $dout

@@ -10,15 +10,17 @@ library(tidyverse)
 source("functions.R")
   
 # define paths 
-dio_orthobench = "../../results/scarap_pan/orthobench"
-dio_parabench = "../../results/scarap_pan/parabench"
-dio_lactos = "../../results/scarap_pan/lactobacillales_genusreps"
-dio_tonkinhill = "../../results/scarap_pan/tonkinhill"
+dio_orthobench <- "../../results/scarap_pan/orthobench"
+dio_parabench <- "../../results/scarap_pan/parabench"
+dio_lactos <- "../../results/scarap_pan/lactobacillales_genusreps"
+dio_tonkinhill <- "../../results/scarap_pan/tonkinhill"
+dio_repseqs <- "../../results/scarap_pan/repseqs"
 
 # compile and write resource consumption tables
 message("compiling resource consumption tables")
-for (dio in c(dio_orthobench, dio_parabench, dio_lactos, dio_tonkinhill)) {
-  paste0(dio, "/tools") %>%
+dios <- c(dio_orthobench, dio_parabench, dio_lactos, dio_tonkinhill, dio_repseqs)
+for (dio in dios) {
+  paste0(dio, "/runs") %>%
     toolsubdirs() %>%
     read_stats() %>%
     write_csv(paste0(dio, "/resources.csv"))
@@ -26,8 +28,8 @@ for (dio in c(dio_orthobench, dio_parabench, dio_lactos, dio_tonkinhill)) {
 
 # compile and write pangenome tables
 message("compiling pangenome tables")
-for (dio in c(dio_orthobench, dio_parabench, dio_lactos, dio_tonkinhill)) {
-  paste0(dio, "/tools") %>%
+for (dio in dios) {
+  paste0(dio, "/runs") %>%
     toolsubdirs() %>%
     compile_pangenomes(has_genomes = "scarap_fh") %>%
     write_csv(paste0(dio, "/pangenomes.csv.gz"))

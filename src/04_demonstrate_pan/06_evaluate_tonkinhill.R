@@ -39,16 +39,7 @@ pans <- read_csv(fin_pans, col_types = cols())
 pans <- pans %>% left_join(pan_ref, by = c("gene", "genome"))
 
 # evaluate pangenomes 
-tools <- 
-  pans %>%
-  select(- gene, - genome, - orthogroup) %>%
-  map2(names(.), function(group_pred, tool) {
-    f_measure(group_pred, pans$orthogroup) %>% 
-      as_tibble() %>%
-      mutate(tool = {{tool}})
-  }) %>%
-  reduce(bind_rows) %>%
-  relocate(tool)
+tools <- pans %>% precrec_table(ref_pangenome = orthogroup)
   
 # write evaluations
 tools %>% write_csv(fout_tonkinhill)

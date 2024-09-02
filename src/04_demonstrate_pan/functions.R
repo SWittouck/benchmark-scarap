@@ -262,16 +262,20 @@ read_pangenome_scarap <- function(path) {
 #' orthogroup column per pangenome tool.
 #'
 #' @param dins A named list of paths to pangenome output directories. 
+#' @param has_genomes Name of the pangenome to take the genome column from. 
 #' @return A gene table (tibble). 
 compile_pangenomes <- function(dins, has_genomes) {
-  
+    
   pans <- dins %>% map(read_pangenome) %>% keep(~ ! is.null(.))
+
+  if (! has_genomes %in% names(pans)) has_genomes <- 1
+  genes <- pans[[has_genomes]] %>% select(gene, genome)
   
   pans %>%
     map(~ select(., ! matches("genome"))) %>%
     map2(names(.), ~ rename(.x, !! .y := orthogroup)) %>%
     reduce(full_join, by = "gene") %>%
-    left_join(pans[[has_genomes]] %>% select(gene, genome), by = "gene") %>%
+    left_join(genes, by = "gene") %>%
     relocate(gene, genome)
   
 }
@@ -402,6 +406,93 @@ f_measure <- function(group_pred, group_ref) {
       precision = .$precision, recall = .$recall,
       f_measure = 2 / ((1 / .$precision) + (1 / .$recall))
     )}
+  
+}
+
+#' Calculate precision and recall for pangenomes
+#' 
+#' @param pans A tibble with the columns gene and genome, and one column
+#'   per pangenome tool with the orthogroups inferred by that tool. 
+#' @param ref_pangenome The column in "pans" that contains the reference 
+#'   pangenome. 
+#'   
+#' @return A tibble with the column tool and a bunch of columns with pangenome
+#'   statistics. 
+precrec_table <- function(pans, ref_pangenome) {
+  ref_pangenome <- enquo(ref_pangenome) 
+  pans %>%
+    select(- gene, - genome, - {{ref_pangenome}}) %>%
+      map2(names(.), function(group_pred, tool) {
+        f_measure(group_pred, pull(pans, {{ref_pangenome}})) %>% 
+          as_tibble() %>%
+          mutate(tool = {{tool}})
+      }) %>%
+      reduce(bind_rows) %>%
+      relocate(tool)
+}
+
+#' Calculate pangenome statistics for a single pangenome
+#' 
+#' @param pan A tibble with the columns gene, genome and orthogroup. 
+#' @param orthogroup A quoted alternative name for the orthogroup column. 
+#' 
+#' @return A named list with pangenome statistics
+pangenome_stats_one <- 
+  function(pan, orthogroup = "orthogroup", core_threshold = 0.95) {
+  
+  stats <- list()
+  
+  # preparation
+  pan <- pan %>% select(gene, genome, orthogroup = all_of(orthogroup))
+  orthogroups <- 
+    pan %>%
+    count(genome, orthogroup, name = "n_copies") %>%
+    group_by(orthogroup) %>%
+    summarize(
+      n_genomes = n(),
+      n_genomes_sc = sum(n_copies == 1),
+      n_genes = sum(n_copies),
+      av_copies = n_genes / n_genomes,
+      .groups = "drop"
+    )
+    
+  # number of orthogroups and genomes
+  stats$genomes <- length(unique(pan$genome))
+  stats$orthogroups <- nrow(orthogroups)
+  
+  # number of (single-copy) core orthogroups
+  stats$core_orthogroups <- 
+    sum(orthogroups$n_genomes >= core_threshold * stats$genomes)
+  stats$sc_core_orthogroups <- 
+    sum(orthogroups$n_genomes_sc >= core_threshold * stats$genomes)
+    
+  # average single-copy occurrence of orthogroups
+  stats$av_sc_occurrence <-
+    orthogroups %>%
+    {sum(.$n_genes * .$n_genomes_sc) / sum(.$n_genes)}
+  
+  stats
+  
+  }
+
+#' Calculate pangenome statistics for all pangenomes in a table
+#' 
+#' @param pans A tibble with the columns gene and genome, and one column
+#'   per pangenome tool with the orthogroups inferred by that tool. 
+#'   
+#' @return A tibble with the column tool and a bunch of columns with pangenome
+#'   statistics. 
+pangenome_stats_all <- function(pans) {
+  
+  names(pans) %>%
+    setdiff(c("gene", "genome")) %>%
+    {structure(., names = .)} %>%
+    map(~ pangenome_stats_one(pans, orthogroup = .x)) %>%
+    map2(names(.), ~ {.x$tool <- .y; .x}) %>%
+    transpose() %>%
+    map(as_vector) %>%
+    as_tibble() %>%
+    relocate(tool)
   
 }
 

@@ -21,7 +21,7 @@ fout_repseqs <- "../../results/scarap_pan/repseqs/benchmarks.csv"
 # read data #
 #############
 
-# read all pangenome
+# read all pangenomes
 pans_list <- 
   list.files(dio_datasets, full.names = T) %>%
   set_names(basename(.)) %>%

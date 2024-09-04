@@ -1,7 +1,9 @@
+#!/usr/bin/env bash
+
 # This script extracts CDS features from the tonkinhill2020 simulated genomes 
 # and translates them to amino acid sequences.
-# 
-# dependencies: genometools v1.6.2
+
+# dependencies: genometools
 
 din=../../data/tonkinhill/sim_rep1_fragmented/pgffs
 dout=../../results/tonkinhill/sim_rep1_fragmented/faas

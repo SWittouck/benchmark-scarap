@@ -2,7 +2,7 @@
 
 The goal of this project is to demonstrate the pan, core and sample modules of the SCARAP toolkit for prokaryotic comparative genomics. 
 
-The pangenome pipeline of SCARAP (pan module) is benchmarked against various publicly available pangenome tools. Four main benchmark datasets are used: (1) one representative genome for each genus of *Lactobacillales*, (2) OrthoBench, (3) paraBench and (4) simulated genomes by Tonkin-Hill et al. (2020). The core and sample modules are demonstrated on a dataset with *Lactiplantibacillus* genomes. 
+The pangenome pipeline of SCARAP (pan module) is benchmarked against a number of other pangenome tools on various publicly available or simulated datasets. The core genome and sample pipelines of SCARAP are benchmarked against a dataset of publicly available genomes from the genus Lactiplantibacillus plantarum. 
 
 ## How to run 
 
@@ -25,26 +25,42 @@ Step 3: manually prepare the paraBench benchmark dataset.
 1. Compress all proteomes: `gzip proteomes/*.fasta`. 
 1. Give the script paraBench.py execution permission: `sudo chmod u+x paraBench.py`. 
 
-Step 4: install all dependencies except Broccoli in a virtual environment and activate it: 
+Step 4: install all dependencies except SimPan and Broccoli in a virtual environment and activate it: 
 
     conda env create -f environment.yml --prefix ./env
     conda activate ./env
+
+Step 5: manually install SimPan: 
+
+    mkdir lib
+    cd lib
+    wget https://github.com/zheminzhou/SimPan/archive/refs/tags/v0.1.tar.gz
+    tar xzf v0.1.tar.gz
+    rm v0.1.tar.gz 
+    cd ../
     
-Step 5: manually install Broccoli: 
+Step 6: manually install Broccoli: 
 
-1. Download the tarball with the source code from GitHub and unpack. 
-1. Create a script in `~/bin/` with the following code: `python3 <path-to-repo>/broccoli.py #@` 
+    cd lib
+    wget https://github.com/rderelle/Broccoli/archive/refs/tags/v1.1.tar.gz 
+    tar xzf v1.1.tar.gz
+    rm v1.1.tar.gz
+    cd ../
+    echo "python3 <path-to-repo>/broccoli.py #@" > ~/bin/broccoli
+    chmod u+x ~/bin/broccoli
 
-Step 6: run the scripts in `src` in the order indicated by the file and folder name prefixes. 
+Step 7: run the scripts in `src` in the order indicated by the file and folder name prefixes. 
 
 ## Dependencies
 
 R-related dependencies: 
 
-* R v4.1.2
-* tidyverse v2.0.0
+* R v3.6.3
+* tidyverse v1.3.1
 
 gene prediction and translation: Prodigal, genometools
+
+phylogeny inference: IQ-TREE
 
 pangenome tools: 
 
@@ -78,6 +94,17 @@ Here follows a brief description of the files in the benchmark datasets.
     * fna file for each genome of the species L. plantarum
     * downloaded by the script `scr/02_prepare_lplantarum/02_download_genomes.sh`
 
+`results/simpan`
+
+* 100 genomes simulated by the [SimPan](https://github.com/zheminzhou/SimPan) tool
+* the simulation happens by the script `src/03_prepare_simpan/01_simulate_genomes.sh`
+
+`data/tonkinhill`
+
+* 100 genomes simulated using an E. coli genome as starting point
+* one dataset out of three sets of simulations; version with assemblies from simulated reads
+* reference: [Tonkin-Hill et al., 2020, Genome Biology](https://doi.org/10.1186/s13059-020-02090-4)
+
 `data/orthobench/OrthoBench_v1.1`
 
 * proteomes and benchmarking code for the OrthoBench dataset
@@ -86,9 +113,3 @@ Here follows a brief description of the files in the benchmark datasets.
 `data/parabench/paraBench`
 
 * proteomes and benchmarking code for the paraBench dataset
-
-`data/tonkinhill`
-
-* genomes simulated using an E. coli genome as starting point
-* one dataset out of three sets of simulations; version with assemblies from simulated reads
-* reference: [Tonkin-Hill et al., 2020, Genome Biology](https://doi.org/10.1186/s13059-020-02090-4)

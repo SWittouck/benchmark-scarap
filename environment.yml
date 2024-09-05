@@ -1,18 +1,20 @@
 # run: conda env create --prefix ./env --file environment.yml
 name: benchmark-scarap
 dependencies:
+# set python version that works with  sonicparanoid v1.3.8
+- python=3.7
 # non-pangenome dependencies
 - r-base=3
 - r-tidyverse
 - bioconda::prodigal=2.6.3
 - bioconda::genometools-genometools=1.6.2
 - bioconda::iqtree=1.6.12
-# set python version that works with  sonicparanoid v1.3.8
-- python=3.7
 # scarap dependencies
 - pip
 - bioconda::mafft
 - bioconda::mmseqs2=15.*
+# simpan dependencies
+- bioconda::simbac
 # broccoli dependencies
 - bioconda::diamond
 # pangenome tools

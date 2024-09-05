@@ -4,21 +4,23 @@
 # datasets into a nice gene table and into the OrthoBench format. In addition,
 # the time/memory stats are converted to a table. 
 
-# depencencies: R v4.1.2, tidyverse v2.0.0
+# depencencies: R, tidyverse
 
 library(tidyverse)
 source("functions.R")
-  
+
 # define paths 
+dio_lactos <- "../../results/scarap_pan/lactobacillales_genusreps"
+dio_simpan <- "../../results/scarap_pan/simpan"
+dio_tonkinhill <- "../../results/scarap_pan/tonkinhill"
 dio_orthobench <- "../../results/scarap_pan/orthobench"
 dio_parabench <- "../../results/scarap_pan/parabench"
-dio_lactos <- "../../results/scarap_pan/lactobacillales_genusreps"
-dio_tonkinhill <- "../../results/scarap_pan/tonkinhill"
 dio_repseqs <- "../../results/scarap_pan/repseqs"
 
 # compile and write resource consumption tables
 message("compiling resource consumption tables")
-dios <- c(dio_orthobench, dio_parabench, dio_lactos, dio_tonkinhill, dio_repseqs)
+dios <- c(dio_lactos, dio_simpan, dio_tonkinhill, dio_orthobench, dio_parabench, 
+  dio_repseqs)
 for (dio in dios) {
   paste0(dio, "/runs") %>%
     toolsubdirs() %>%

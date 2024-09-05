@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
 
-# This script runs a set of pangenome tools on a set of test databases 
-# containing proteomes (faa files). 
+# This script runs a set of pangenome tools on a set of test datasets; taking
+# as input either prokka-style gffs ("pgffs") or proteomes ("faas"). 
 
-# dependencies: SCARAP v0.4.0, OrthoFinder v2.5.4, SonicParanoid v1.3.8, 
-# broccoli v1.2, PIRATE v1.0.5
+# dependencies: SCARAP, OrthoFinder, SonicParanoid, broccoli, PIRATE
 
-# datasets for time/accuracy benchmarks
+# locations of pgffs
 din_lacto_gffs=../../results/lactobacillales/genusreps/pgffs
+din_simpan_gffs=../../results/simpan/pgffs
 din_tonkinhill_gffs=../../data/tonkinhill/sim_rep1_fragmented/pgffs
+
+# locations of faas
+din_lacto_faas=../../results/lactobacillales/genusreps/faas # *.faa.gz
+din_simpan_faas=../../results/simpan/faas # *.faa.gz
+din_tonkinhill_faas=../../results/tonkinhill/sim_rep1_fragmented/faas # *.faa.gz
 din_orthobench_faas=../../data/orthobench/OrthoBench_v1.1/Input # *.fa.gz
 din_parabench_faas=../../data/parabench/paraBench/data/proteomes # *.fasta.gz
-din_lacto_faas=../../results/lactobacillales/genusreps/faas # *.faa.gz
-din_tonkinhill_faas=../../results/tonkinhill/sim_rep1_fragmented/faas
 
-# output for time/accuracy benchmakrs
+# output folder
 dout_root=../../results/scarap_pan
 
 # input/output for lacto species pangenome
@@ -89,8 +92,8 @@ benchmark_pirate() {
 # Tools that need gffs #
 ########################
 
-dins=( $din_lacto_gffs $din_tonkinhill_gffs )
-datasets=( lactobacillales_genusreps tonkinhill )
+dins=( $din_lacto_gffs $din_simpan_gffs $din_tonkinhill_gffs )
+datasets=( lactobacillales_genusreps simpan tonkinhill )
 
 for i in ${!dins[@]} ; do
 
@@ -115,8 +118,9 @@ done
 # Tools that need faas #
 ########################
 
-dins=( $din_orthobench_faas $din_parabench_faas $din_lacto_faas $din_tonkinhill_faas )
-datasets=( orthobench parabench lactobacillales_genusreps tonkinhill )
+dins=( $din_lacto_faas $din_simpan_faas $din_tonkinhill_faas \
+  $din_orthobench_faas $din_parabench_faas )
+datasets=( lactobacillales_genusreps simpan tonkinhill orthobench parabench )
 
 for i in ${!dins[@]} ; do
 
@@ -144,4 +148,6 @@ for i in ${!dins[@]} ; do
 done
 
 # run SCARAP FH on Lactobacillales species representatives
-scarap pan $din_lacto_species_faas $dout_lacto_species -t $threads
+if [ ! -d $dout_lacto_species ] ; then
+  scarap pan $din_lacto_species_faas $dout_lacto_species -t $threads
+fi

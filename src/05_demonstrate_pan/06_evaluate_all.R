@@ -16,7 +16,7 @@ dio_datasets <- "../../results/scarap_pan"
 
 # locations of reference pangenomes
 fin_refpan_simpan <- "../../results/simpan/reference_pangenome.tsv"
-fin_refpan_tonkinhill <- "../../results/tonkinhill/reference_pangenome.tsv"
+fin_refpan_tonkinhill <- "../../results/tonkinhill/sim_rep1_fragmented/reference_pangenome.tsv"
 
 # locations of precomputed orthobench and parabench benchmarks
 din_benchmarks_orthobench <- "../../results/scarap_pan/orthobench/benchmarks"
@@ -24,7 +24,7 @@ din_benchmarks_parabench <- "../../results/scarap_pan/parabench/benchmarks"
 
 # locations for bechmark output tables
 fout_benchmarks_simpan <- "../../results/scarap_pan/simpan/benchmarks.csv"
-fout_benchmarks_tonkinhill <- "../../results/scarap_pan/toninhill/benchmarks.csv"
+fout_benchmarks_tonkinhill <- "../../results/scarap_pan/tonkinhill/benchmarks.csv"
 fout_benchmarks_orthobench <- "../../results/scarap_pan/orthobench/benchmarks.csv"
 fout_benchmarks_parabench <- "../../results/scarap_pan/parabench/benchmarks.csv"
 fout_benchmarks_repseqs <- "../../results/scarap_pan/repseqs/benchmarks.csv"
@@ -69,9 +69,9 @@ for (dataset in names(statistics_list)) {
     write_csv(paste0(dio_datasets, "/", dataset, "/statistics.csv"))
 }
 
-##############################
-# compute/compile benchmarks #
-##############################
+########################################
+# compute/compile and write benchmarks #
+########################################
 
 # compute simpan, tonkinhill and repseqs benchmarks
 runs_simpan <- 
@@ -97,10 +97,6 @@ runs_orthobench <-
 runs_parabench <-
   runs_parabench %>%
   select(tool, precision, recall, f_measure = f1_score)
-
-################################
-# process and write benchmarks # 
-################################
 
 # write benchmarks
 runs_simpan %>% write_csv(fout_benchmarks_simpan)

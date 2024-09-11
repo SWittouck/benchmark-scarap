@@ -14,12 +14,8 @@ tar czf benchmark_scarap_v4.tar.gz \
   scarap_core/lactiplantibacillus/corefull/genes.tsv \
   scarap_core/lactiplantibacillus/core100/genes.tsv \
   scarap_core/lactiplantibacillus/pan/pangenome.tsv \
-  scarap_sample/lactiplantibacillus/corefull_mean/identities.tsv \
-  scarap_sample/lactiplantibacillus/corefull_mean/seeds.txt \
-  scarap_sample/lactiplantibacillus/core100_mean/identities.tsv \
-  scarap_sample/lactiplantibacillus/core100_mean/seeds.txt \
-  scarap_sample/lactiplantibacillus/corefull_mean90/identities.tsv \
-  scarap_sample/lactiplantibacillus/corefull_mean90/seeds.txt \
-  scarap_sample/lactiplantibacillus/core100_mean90/identities.tsv \
-  scarap_sample/lactiplantibacillus/core100_mean90/seeds.txt \
+  scarap_core/lactiplantibacillus/*/stats.txt \
+  scarap_sample/lactiplantibacillus/*/identities.tsv \
+  scarap_sample/lactiplantibacillus/*/seeds.txt \
+  scarap_sample/lactiplantibacillus/*/stats.txt \
   scarap_sample/lactiplantibacillus/tree/lactiplantibacillus.treefile
